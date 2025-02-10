@@ -1,25 +1,26 @@
 package kg.alatoo.bookstore.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 
-//@Getter
-//@Setter
-//@NoArgsConstructor
-@RequiredArgsConstructor
-//@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Data
 @Builder
-@AllArgsConstructor
-//@ToString
+@Entity
 public class Book {
 
-    private final long id;
-    @NonNull
+    @Id
+    @GeneratedValue
+    private Long id;
     private String title;
     private String description;
-
     private String author;
     private String isbn;
 
 
 }
+
