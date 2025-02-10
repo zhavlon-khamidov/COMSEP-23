@@ -2,11 +2,19 @@ package kg.alatoo.bookstore.entities;
 
 import lombok.*;
 
+//@Getter
+//@Setter
+//@NoArgsConstructor
+@RequiredArgsConstructor
+//@EqualsAndHashCode
+@Data
 @Builder
-@ToString
+@AllArgsConstructor
+//@ToString
 public class Book {
 
-    private long id;
+    private final long id;
+    @NonNull
     private String title;
     private String description;
 
