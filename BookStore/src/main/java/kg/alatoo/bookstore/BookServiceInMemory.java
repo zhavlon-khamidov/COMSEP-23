@@ -1,10 +1,14 @@
 package kg.alatoo.bookstore;
 
 import kg.alatoo.bookstore.entities.Book;
+import kg.alatoo.bookstore.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceInMemory implements BookService {
@@ -47,7 +51,7 @@ public class BookServiceInMemory implements BookService {
             throw new IllegalArgumentException("Book not found");
         }
         if (book.getId() != null) {
-            if (book.getId() != id) {
+            if (!book.getId().equals(id)) {
                 throw new IllegalArgumentException("Book id mismatch");
             }
         }
@@ -61,5 +65,26 @@ public class BookServiceInMemory implements BookService {
         book.setId(nextId++);
         books.put(book.getId(), book);
         return book;
+    }
+
+    @Override
+    public List<Book> getBooks() {
+        return new ArrayList<>(books.values());
+    }
+
+    @Override
+    public List<Book> getBooksByAuthor(String author) {
+        return books.values()
+                .stream()
+                .filter(book -> book.getAuthor().equals(author))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Book getBookById(long id) {
+        if (!books.containsKey(id)) {
+            throw new NotFoundException("Error: Book with id " + id + " not found");
+        }
+        return books.get(id);
     }
 }
