@@ -1,4 +1,4 @@
-package kg.alatoo.bookstore;
+package kg.alatoo.bookstore.services;
 
 import kg.alatoo.bookstore.entities.Book;
 import kg.alatoo.bookstore.exceptions.NotFoundException;
@@ -11,13 +11,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class BookServiceInMemory implements BookService {
+public class InMemoryBookService implements BookService {
 
     private final Map<Long, Book> books = new HashMap<>();
 
     private static long nextId = 1;
 
-    public BookServiceInMemory() {
+    public InMemoryBookService() {
         Book book1 = Book.builder()
                 .id(nextId++)
                 .title("Book 1")

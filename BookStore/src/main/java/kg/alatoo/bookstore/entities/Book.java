@@ -1,10 +1,9 @@
 package kg.alatoo.bookstore.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -20,6 +19,12 @@ public class Book {
     private String description;
     private String author;
     private String isbn;
+
+    @ManyToOne
+    private Publisher publisher;
+
+    @ManyToMany
+    private List<Author> authors;
 
 
 }

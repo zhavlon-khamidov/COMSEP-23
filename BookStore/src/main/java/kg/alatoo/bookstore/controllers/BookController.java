@@ -1,6 +1,6 @@
 package kg.alatoo.bookstore.controllers;
 
-import kg.alatoo.bookstore.BookService;
+import kg.alatoo.bookstore.services.BookService;
 import kg.alatoo.bookstore.entities.Book;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

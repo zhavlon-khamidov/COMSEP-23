@@ -1,4 +1,4 @@
-package kg.alatoo.bookstore;
+package kg.alatoo.bookstore.services;
 
 import kg.alatoo.bookstore.entities.Book;
 
