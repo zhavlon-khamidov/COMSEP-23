@@ -1,7 +1,10 @@
 package kg.alatoo.bookstore.services;
 
+import kg.alatoo.bookstore.dto.BookListDto;
 import kg.alatoo.bookstore.entities.Book;
 import kg.alatoo.bookstore.exceptions.NotFoundException;
+import kg.alatoo.bookstore.mappers.BookMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,10 +17,12 @@ import java.util.stream.Collectors;
 public class InMemoryBookService implements BookService {
 
     private final Map<Long, Book> books = new HashMap<>();
+    private final BookMapper bookMapper;
 
     private static long nextId = 1;
 
-    public InMemoryBookService() {
+    public InMemoryBookService(BookMapper bookMapper) {
+        this.bookMapper = bookMapper;
         Book book1 = Book.builder()
                 .id(nextId++)
                 .title("Book 1")
@@ -68,23 +73,32 @@ public class InMemoryBookService implements BookService {
     }
 
     @Override
-    public List<Book> getBooks() {
-        return new ArrayList<>(books.values());
+    public List<BookListDto> getBooks() {
+        return bookMapper.booksToBookListDtos(new ArrayList<>(books.values()));
     }
 
     @Override
-    public List<Book> getBooksByAuthor(String author) {
-        return books.values()
+    public List<BookListDto> getBooksByAuthor(String author) {
+        List<Book> books = this.books.values()
                 .stream()
                 .filter(book -> book.getAuthor().equals(author))
                 .collect(Collectors.toList());
+        return bookMapper.booksToBookListDtos(books);
     }
 
     @Override
-    public Book getBookById(long id) {
+    public Book getBookById(Long id) {
         if (!books.containsKey(id)) {
             throw new NotFoundException("Error: Book with id " + id + " not found");
         }
         return books.get(id);
+    }
+
+    @Override
+    public Book deleteBook(Long id) {
+        if (!books.containsKey(id)) {
+            throw new NotFoundException("Error: Book with id " + id + " not found");
+        }
+        return books.remove(id);
     }
 }

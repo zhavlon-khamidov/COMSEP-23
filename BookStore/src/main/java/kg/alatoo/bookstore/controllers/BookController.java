@@ -1,5 +1,6 @@
 package kg.alatoo.bookstore.controllers;
 
+import kg.alatoo.bookstore.dto.BookListDto;
 import kg.alatoo.bookstore.services.BookService;
 import kg.alatoo.bookstore.entities.Book;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class BookController {
 
 
     @GetMapping
-    public List<Book> getBooks(
+    public List<BookListDto> getBooks(
             @RequestParam(required = false) String author
             ) {
         if (author == null) {
