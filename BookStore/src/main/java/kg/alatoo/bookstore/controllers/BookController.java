@@ -1,5 +1,6 @@
 package kg.alatoo.bookstore.controllers;
 
+import jakarta.validation.Valid;
 import kg.alatoo.bookstore.dto.BookListDto;
 import kg.alatoo.bookstore.services.BookService;
 import kg.alatoo.bookstore.entities.Book;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,7 +49,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+    public ResponseEntity<Book> createBook(@RequestBody @Validated Book book) {
         Book createdBook = bookService.addBook(book);
 
         /*return ResponseEntity
