@@ -1,17 +1,15 @@
 package kg.alatoo.bookstore.controllers;
 
-import jakarta.validation.Valid;
 import kg.alatoo.bookstore.dto.BookListDto;
 import kg.alatoo.bookstore.services.BookService;
 import kg.alatoo.bookstore.entities.Book;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -37,15 +35,14 @@ public class BookController {
 
 
     @GetMapping
-    public List<BookListDto> getBooks(
-            @RequestParam(required = false) String author
+    public Page<BookListDto> getBooks(
+            @RequestParam(required = false) Integer pageNumber,
+            @RequestParam(required = false) Integer pageSize,
+            @RequestParam(required = false) String[] sortBy //TODO
             ) {
-        if (author == null) {
             log.debug("Getting all books");
-            return bookService.getBooks();
-        }
-        log.debug("Getting all books of author {}", author);
-        return bookService.getBooksByAuthor(author);
+            return bookService.getBooks(pageNumber, pageSize);
+
     }
 
     @PostMapping
