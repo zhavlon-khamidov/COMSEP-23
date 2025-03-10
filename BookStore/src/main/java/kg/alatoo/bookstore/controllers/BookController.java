@@ -1,5 +1,8 @@
 package kg.alatoo.bookstore.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.alatoo.bookstore.dto.BookListDto;
 import kg.alatoo.bookstore.services.BookService;
 import kg.alatoo.bookstore.entities.Book;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/book/")
+@Tag(description = "Book controller description", name = "Book Controller")
 public class BookController {
 
     private final BookService bookService;
@@ -35,8 +39,10 @@ public class BookController {
 
 
     @GetMapping
+    @Operation(summary = "List of books", description = "Provides list of books in pages",
+    parameters = {@Parameter(name = "pageSize", description = "number of books in each page")})
     public Page<BookListDto> getBooks(
-            @RequestParam(required = false) Integer pageNumber,
+            @RequestParam(required = false) @Parameter(description = "Page number to request") Integer pageNumber,
             @RequestParam(required = false) Integer pageSize,
             @RequestParam(required = false) String[] sortBy //TODO
             ) {

@@ -25,21 +25,18 @@ public class InMemoryBookService implements BookService {
         Book book1 = Book.builder()
                 .id(nextId++)
                 .title("Book 1")
-                .author("Author 1")
                 .isbn("32135415135")
                 .build();
 
         Book book2 = Book.builder()
                 .id(nextId++)
                 .title("Book 2")
-                .author("Author 2")
                 .isbn("5432151")
                 .build();
 
         Book book3 = Book.builder()
                 .id(nextId++)
                 .title("Book 3")
-                .author("Author 3")
                 .isbn("85436413851")
                 .build();
 
@@ -80,7 +77,7 @@ public class InMemoryBookService implements BookService {
     public List<BookListDto> getBooksByAuthor(String author) {
         List<Book> books = this.books.values()
                 .stream()
-                .filter(book -> book.getAuthor().equals(author))
+//                .filter(book -> book.getAuthor().equals(author)) // TODO:
                 .collect(Collectors.toList());
         return bookMapper.booksToBookListDtos(books);
     }
