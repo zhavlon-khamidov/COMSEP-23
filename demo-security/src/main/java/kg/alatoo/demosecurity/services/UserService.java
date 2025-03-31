@@ -1,5 +1,6 @@
 package kg.alatoo.demosecurity.services;
 
+import kg.alatoo.demosecurity.entity.User;
 import kg.alatoo.demosecurity.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,5 +19,9 @@ public class UserService implements UserDetailsService {
         return userRepo
                 .getUsersByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    public User saveUser(User user) {
+        return userRepo.save(user);
     }
 }
